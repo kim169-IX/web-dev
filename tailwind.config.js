@@ -7,9 +7,9 @@ export default {
   ],
   theme: {
     extend: {
-    width: {
-     '96': '24rem', 
-
+      width: {
+        '96': '24rem',
+      },
     },
   },
   plugins: [],
