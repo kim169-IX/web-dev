@@ -7,18 +7,54 @@ use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller
 {
+    private $genres = null;
+
+    public function __construct()
+    {
+        $this->genres = collect(Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/genre/movie/list')
+            ->json()['genres'])
+            ->mapWithKeys(function ($genre) {
+                return [$genre['id'] => $genre['name']];
+            });
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $popularMovies = Http::withToken(config('services.tmdb.token'))
-            ->get("https://api.themoviedb.org/3/movie/popular")  
+            ->get('https://api.themoviedb.org/3/movie/popular')
             ->json();
-        
-        dd($popularMovies);
 
-        return view('movies.index');  
+        $nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/movie/now_playing') 
+            ->json();
+
+        $upcomingMovies = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/movie/upcoming')
+            ->json();
+
+        $popularMovies['results'] = collect($popularMovies['results'])->map(function($movie) {
+            $movie['genre_names'] = collect($movie['genre_ids'])->map(function($id) {
+                return $this->genres->get($id);
+            })->implode(', ');
+            return $movie;
+        });
+
+        $upcomingMovies['results'] = collect($upcomingMovies['results'])->map(function($movie) {
+            $movie['genre_names'] = collect($movie['genre_ids'])->map(function($id) {
+                return $this->genres->get($id);
+            })->implode(', ');
+            return $movie;
+        });
+
+        return view('movies.index', [
+            'popularMovies' => $popularMovies,
+            'nowPlayingMovies' => $nowPlayingMovies,
+            'upcomingMovies' => $upcomingMovies
+        ]);
     }
     
     
