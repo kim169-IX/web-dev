@@ -52,8 +52,8 @@ class MovieController extends Controller
 
         return view('movies.index', [
             'popularMovies' => $popularMovies,
-            'nowPlayingMovies' => $nowPlayingMovies,
-            'upcomingMovies' => $upcomingMovies
+            'upcomingMovies' => $upcomingMovies,
+            'genres' => $this->genres, 
         ]);
     }
     
@@ -76,7 +76,23 @@ class MovieController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $movie = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images')
+            ->json();
+
+        // Format genres into a string
+        $genreNames = collect($movie['genres'])->pluck('name')->implode(', ');
+        
+        // Add genre_names to movie array
+        $movie['genre_names'] = $genreNames;
+
+        $movie['cast'] = collect($movie['credits']['cast'])->take(5); 
+
+        $movie['images'] = collect($movie['images']['backdrops'])->take(9);
+
+        return view('movies.show', [ 
+            'movie' => $movie
+        ]);
     }
 
     /**

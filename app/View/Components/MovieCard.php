@@ -8,22 +8,28 @@ use Illuminate\View\Component;
 
 class MovieCard extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public $movie;
+    public $genres;
+
+    public function __construct($movie, $genres = []) 
     {
-        //
+        $this->movie = $movie;
+        $this->genres = $genres;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
+    public function genreNames()
+    {
+        if (empty($this->genres)) {
+            return '';
+        }
+        
+        return collect($this->genres)
+            ->pluck('name')
+            ->implode(', ');
+    }
+
     public function render(): View|Closure|string
     {
         return view('components.movie-card');
-    }
-} 
-
-
-
+    } 
+}
