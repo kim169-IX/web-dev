@@ -7,6 +7,8 @@
     <title>Movie App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @livewireStyles 
+
 </head>
 
 <body>
@@ -43,12 +45,7 @@
 
                             <!-- Search Bar -->
                             <div class="relative ml-4">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    </svg>
-                                </div>
-                                <input type="text" id="search-input" class="block w-64 pl-10 pr-3 py-2 border border-gray-600 rounded-md leading-5 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 sm:text-sm" placeholder="Search movies...">
+                                <livewire:search-dropdown />
                             </div>
                         </div>
                     </div>
@@ -102,6 +99,7 @@
         <div class="container mx-auto px-4">
             <div class="backdrop-blur-sm bg-white/30 shadow-lg rounded-lg pt-2 px-6 pb-6 max-w-[1400px] mx-auto border border-white/20">
                 @yield('content')
+                @livewireScripts
             </div>
         </div>
     </main>
@@ -172,6 +170,7 @@
             }
         });
     </script>
+    
 
 </body>
 
