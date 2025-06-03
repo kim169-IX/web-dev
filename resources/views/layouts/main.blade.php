@@ -46,6 +46,7 @@
                             <!-- Search Bar -->
                             <div class="relative ml-4">
                                 <livewire:search-dropdown />
+                                 
                             </div>
                         </div>
                     </div>
@@ -99,7 +100,7 @@
         <div class="container mx-auto px-4">
             <div class="backdrop-blur-sm bg-white/30 shadow-lg rounded-lg pt-2 px-6 pb-6 max-w-[1400px] mx-auto border border-white/20">
                 @yield('content')
-                @livewireScripts
+                
             </div>
         </div>
     </main>
@@ -171,7 +172,6 @@
         });
     </script>
     
-
+@livewireScripts
 </body>
-
-</html>
+</html> 
