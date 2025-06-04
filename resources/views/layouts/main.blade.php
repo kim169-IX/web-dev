@@ -7,8 +7,7 @@
     <title>Movie App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    @livewireStyles 
-
+    @livewireStyles
 </head>
 
 <body>
@@ -38,7 +37,6 @@
                     </div>
                     <div class="hidden sm:block sm:flex-1">
                         <div class="flex justify-center items-center space-x-4">
-                            <!-- <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a> -->
                             <a href="{{ route('movies.index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Explore</a>
                             <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
                             <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Watchlist</a>
@@ -46,12 +44,10 @@
                             <!-- Search Bar -->
                             <div class="relative ml-4">
                                 <livewire:search-dropdown />
-                                 
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Profile dropdown -->
                 <div class="relative ml-3">
@@ -72,24 +68,17 @@
                 </div>
             </div>
         </div>
-        </div>
 
         <!-- Mobile menu - Hidden by default -->
         <div class="hidden sm:hidden" id="mobile-menu">
             <div class="space-y-1 px-2 pb-3 pt-2">
-                <!-- <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Dashboard</a> -->
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Movies</a>
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Favorites</a>
+                <a href="{{ route('movies.index') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Explore</a>
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
                 <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Watchlist</a>
 
                 <!-- Mobile Search Bar -->
                 <div class="relative px-3 py-2">
-                    <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
-                        <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                    <input type="text" id="mobile-search-input" class="block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-md leading-5 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 text-base" placeholder="Search movies...">
+                    <livewire:search-dropdown />
                 </div>
             </div>
         </div>
@@ -100,12 +89,9 @@
         <div class="container mx-auto px-4">
             <div class="backdrop-blur-sm bg-white/30 shadow-lg rounded-lg pt-2 px-6 pb-6 max-w-[1400px] mx-auto border border-white/20">
                 @yield('content')
-                
             </div>
         </div>
     </main>
-
-
 
     <script>
         // Mobile menu toggle
@@ -170,8 +156,20 @@
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
             }
         });
+
+        // Close search dropdown when clicking outside (for Livewire component)
+        document.addEventListener('click', function(event) {
+            const searchDropdowns = document.querySelectorAll('[wire\\:model\\.debounce\\.500ms="search"]');
+            searchDropdowns.forEach(function(searchInput) {
+                const dropdown = searchInput.closest('.relative').querySelector('[class*="absolute"][class*="bg-gray-800"]');
+                if (dropdown && !searchInput.closest('.relative').contains(event.target)) {
+                    // This will be handled by the Livewire component's logic
+                    searchInput.blur();
+                }
+            });
+        });
     </script>
     
-@livewireScripts
+    @livewireScripts
 </body>
-</html> 
+</html>
