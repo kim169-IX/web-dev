@@ -1,18 +1,29 @@
-<div class="mt-8">
+<div class="mt-6 w-44 sm:w-48">
     <a href="{{ route('movies.show', $movie['id']) }}">
-        <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] }}"
+        <img
+            src="{{ 'https://image.tmdb.org/t/p/w500/' . $movie['poster_path'] }}"
             alt="{{ $movie['title'] }}"
-            class="w-64 h-96 object-cover rounded hover:opacity-75 transition duration-400 ease-in-out">
+            class="w-full h-64 object-cover rounded-lg hover:opacity-80 transition duration-300 ease-in-out shadow-md"
+        >
     </a>
+
     <div class="mt-2">
-        <a href="{{ route('movies.show', $movie['id']) }}">{{ $movie['title'] }}</a>
-        <div class="flex items-center text-gray-600 mt-1">
-            <img src="{{ asset('star.png') }}" alt="star" class="w-4 h-4 fill-current text-orange-500">
-            <span class="ml-1">{{ $movie['vote_average'] * 10 }}%</span>
-            <span class="mx-1">/</span>
+        <!-- Movie Title (always visible) -->
+        <a href="{{ route('movies.show', $movie['id']) }}"
+           class="block text-sm font-semibold  leading-snug text-orange-400 transition duration-200">
+            {{ $movie['title'] }}
+        </a>
+
+        <!-- Rating & Release Date -->
+        <div class="flex items-center text-xs text-gray-400 mt-1">
+            <img src="{{ asset('star.png') }}" alt="star" class="w-4 h-4">
+            <span class="ml-1 text-orange-400 font-medium">{{ $movie['vote_average'] * 10 }}%</span>
+            <span class="mx-2 text-gray-500">|</span>
             <span>{{ \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y') }}</span>
         </div>
-        <div class="text-gray-600">
+
+        <!-- Genres -->
+        <div class="text-xs text-gray-400 mt-1">  
             {{ $movie['genre_names'] }}
         </div>
     </div>

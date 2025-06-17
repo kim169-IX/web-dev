@@ -82,4 +82,6 @@ class SearchDropdown extends Component
     {
         return view('livewire.search-dropdown');
     }
-}
+
+
+}   

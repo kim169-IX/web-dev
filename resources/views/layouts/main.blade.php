@@ -2,11 +2,19 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie App</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Swiper CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
+
     @livewireStyles
 </head>
 
@@ -32,13 +40,13 @@
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex shrink-0 items-center">
                         <a href="{{ route('movies.index') }}">
-                            <img class="h-8 w-auto" src="{{ asset('github.png') }}" alt="Movie App">
+                            <img class="h-8 w-auto" src="{{ asset('github.png') }}" alt="Movie App" />
                         </a>
                     </div>
                     <div class="hidden sm:block sm:flex-1">
                         <div class="flex justify-center items-center space-x-4">
                             <a href="{{ route('movies.index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Explore</a>
-                            <a href="{{route('movielist.index')}}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
+                            <a href="{{ route('movielist.index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
                             <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Watchlist</a>
 
                             <!-- Search Bar -->
@@ -55,7 +63,7 @@
                         <button type="button" id="user-menu-button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-expanded="false" aria-haspopup="true">
                             <span class="absolute -inset-1.5"></span>
                             <span class="sr-only">Open user menu</span>
-                            <img class="size-8 rounded-full" src="{{ asset('memedog.jpg') }}" alt="Profile">
+                            <img class="size-8 rounded-full" src="{{ asset('memedog.jpg') }}" alt="Profile" />
                         </button>
                     </div>
 
@@ -92,6 +100,30 @@
             </div>
         </div>
     </main>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <!-- Swiper initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const swiper = new Swiper('.mySwiper', {
+                loop: true,
+                autoplay: {
+                    delay: 6000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+        });
+    </script>
 
     <script>
         // Mobile menu toggle
@@ -169,7 +201,7 @@
             });
         });
     </script>
-    
+
     @livewireScripts
 </body>
 </html>

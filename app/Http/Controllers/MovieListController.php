@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 class MovieListController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource (all genres).
      */
     public function index()
     {
@@ -19,26 +19,10 @@ class MovieListController extends Controller
         return view('movielist.index', [
             'genres' => $genres
         ]);
-    } 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Display the specified resource (movies by genre).
      */
     public function show(string $id)
     {
@@ -49,15 +33,17 @@ class MovieListController extends Controller
 
         $genre = collect($genreResponse['genres'])->firstWhere('id', (int)$id);
 
+        if (!$genre) {
+            abort(404, 'Genre not found');
+        }
+
         // Get movies filtered by genre
         $movies = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/discover/movie', [
-                'query' => [
-                    'with_genres' => $id,
-                    'sort_by' => 'popularity.desc',
-                    'page' => 1,
-                    'vote_count.gte' => 100
-                ]
+                'with_genres' => $id,
+                'sort_by' => 'popularity.desc',
+                'page' => 1,
+                'vote_count.gte' => 100
             ])
             ->json()['results'];
 
@@ -67,25 +53,28 @@ class MovieListController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Other resource methods left empty since unused
+
+    public function create()
+    {
+        //
+    }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //
