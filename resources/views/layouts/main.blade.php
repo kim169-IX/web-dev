@@ -38,7 +38,7 @@
                     <div class="hidden sm:block sm:flex-1">
                         <div class="flex justify-center items-center space-x-4">
                             <a href="{{ route('movies.index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Explore</a>
-                            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
+                            <a href="{{route('movielist.index')}}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
                             <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Watchlist</a>
 
                             <!-- Search Bar -->
@@ -46,7 +46,7 @@
                                 <livewire:search-dropdown />
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
 
                 <!-- Profile dropdown -->
