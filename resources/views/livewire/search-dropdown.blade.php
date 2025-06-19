@@ -78,15 +78,27 @@
 
             {{-- Genre Dropdown --}}
             <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                @php
+                    $selectedGenreName = 'Genre';
+                    if ($genreFilter) {
+                        foreach ($genres as $genre) {
+                            if ($genre['id'] == $genreFilter) {
+                                $selectedGenreName = $genre['name'];
+                                break;
+                            }
+                        }
+                    }
+                @endphp
                 <button @click="open = !open"
                     class="h-9 text-xs w-28 flex items-center justify-between px-3 border border-gray-600 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition">
-                    {{ $genreFilter ? ($genres->firstWhere('id', $genreFilter)['name'] ?? 'Genre') : 'Genre' }}
+                    {{ $selectedGenreName }}
                     <svg class="w-3 h-3 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
 
-                <div x-show="open" class="absolute mt-1 w-28 bg-gray-800 border border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-auto z-50">
+                <div x-show="open" x-cloak x-transition
+                    class="absolute mt-1 w-28 bg-gray-800 border border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-auto z-50">
                     <ul class="text-white text-xs">
                         <li wire:click="$set('genreFilter', '')" class="px-3 py-2 hover:bg-gray-700 cursor-pointer">All Genres</li>
                         @foreach($genres as $genre)
@@ -100,23 +112,24 @@
 
             {{-- Sort Dropdown --}}
             <div class="relative" x-data="{ open: false }" @click.away="open = false">
-                <button @click="open = !open"
-                    class="h-9 text-xs w-28 flex items-center justify-between px-3 border border-gray-600 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition">
-                    @php
-                    $sortLabels = [
+                @php
+                $sortLabels = [
                     'popularity.desc' => 'Popular',
                     'vote_average.desc' => 'Rating',
                     'release_date.desc' => 'Latest',
                     'release_date.asc' => 'Oldest'
-                    ];
-                    @endphp
+                ];
+                @endphp
+                <button @click="open = !open"
+                    class="h-9 text-xs w-28 flex items-center justify-between px-3 border border-gray-600 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition">
                     {{ $sortLabels[$sortBy] ?? 'Sort By' }}
                     <svg class="w-3 h-3 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
 
-                <div x-show="open" class="absolute mt-1 w-28 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-50">
+                <div x-show="open" x-cloak x-transition
+                    class="absolute mt-1 w-28 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-50">
                     <ul class="text-white text-xs">
                         @foreach($sortLabels as $value => $label)
                         <li wire:click="$set('sortBy', '{{ $value }}')" class="px-3 py-2 hover:bg-gray-700 cursor-pointer">{{ $label }}</li>
@@ -126,3 +139,4 @@
             </div>
         </div>
     </div>
+</div>

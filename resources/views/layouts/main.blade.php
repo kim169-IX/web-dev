@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie App</title>
 
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
 
     <!-- Swiper CSS -->
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
-    />
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
     @livewireStyles
 </head>
@@ -47,25 +47,25 @@
                         <div class="flex justify-center items-center space-x-4">
                             <a href="{{ route('movies.index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Explore</a>
                             <a href="{{ route('movielist.index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
-                            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Watchlist</a>
+                            <!-- <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Watchlist</a> -->
 
                             <!-- Search Bar -->
                             <div class="relative ml-4">
                                 <livewire:search-dropdown />
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
 
                 <!-- Profile dropdown -->
-                <div class="relative ml-3">
+                <!-- <div class="relative ml-3">
                     <div>
                         <button type="button" id="user-menu-button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-expanded="false" aria-haspopup="true">
                             <span class="absolute -inset-1.5"></span>
                             <span class="sr-only">Open user menu</span>
                             <img class="size-8 rounded-full" src="{{ asset('memedog.jpg') }}" alt="Profile" />
                         </button>
-                    </div>
+                    </div> -->
 
                     <!-- Dropdown menu - Hidden by default -->
                     <div id="user-menu" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
@@ -106,7 +106,7 @@
 
     <!-- Swiper initialization -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const swiper = new Swiper('.mySwiper', {
                 loop: true,
                 autoplay: {
@@ -204,4 +204,5 @@
 
     @livewireScripts
 </body>
+
 </html>
